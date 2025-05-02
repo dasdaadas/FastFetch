@@ -55,7 +55,7 @@ const paymentFunc = async () => {
       
     
   } else if (paymentMethod.value === 'cashOnDel') {
-    return router.push('/final');
+    return router.replace('/final');
   }
 };
 
@@ -75,10 +75,6 @@ const confirmOrder = ()=> {
         }
         
 </script>
-
-
-
-
 
 
 

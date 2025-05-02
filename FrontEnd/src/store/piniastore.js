@@ -1,7 +1,6 @@
-import router from "@/router/route";
+
 import { defineStore } from "pinia";
 import {computed, ref,watch} from 'vue'
-import {useRouter} from 'vue-router'
 import { useToast } from "vue-toastification";
 
 
@@ -186,7 +185,7 @@ const orderItem = async (router) => {
         localStorage.setItem('fee', JSON.stringify(deliveryFee.value));
         localStorage.setItem('cart',JSON.stringify(cart.value));
         cart.value = [];
-        router.push('/checkout');
+        router.replace('/checkout');
 
 }catch(error){
   console.error("Error placing order:", error.message);

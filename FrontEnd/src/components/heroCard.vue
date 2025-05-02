@@ -1,7 +1,10 @@
 <script setup>
-   
+   import {useRouter} from 'vue-router';
 
-
+   const router = useRouter();
+   const heroClicked = ()=> {
+      router.push('/menu/food')
+ }
 
 
 </script>
@@ -22,8 +25,8 @@
         <span class="block">fast food types and coffee we have to</span>
         <span class="block">offer!</span>
       </p>
-      <button class="bg-green-500 text-white py-2 px-4 sm:py-3 sm:px-5 rounded-lg mt-4 md:mt-6 text-sm sm:text-base md:text-lg lg:text-xl font-semibold hover:bg-yellow-600 transition duration-300">
-        Go to products
+      <button @click="heroClicked" class="bg-green-500 text-white py-2 px-4 sm:py-3 sm:px-5 rounded-lg mt-4 md:mt-6 text-sm sm:text-base md:text-lg lg:text-xl font-semibold hover:bg-yellow-600 transition duration-300">
+        Go to Menu
       </button>
     </div>
 

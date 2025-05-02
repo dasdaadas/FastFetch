@@ -1,25 +1,33 @@
 <script setup>
   import navbar from '@/components/navBar.vue';
-  import { RouterView,useRoute } from 'vue-router';
-  import {computed,onMounted} from 'vue';
+  import { RouterView,useRoute,useRouter } from 'vue-router';
+  import {computed,onMounted,nextTick} from 'vue';
   import { useStore } from './store/piniastore';
+  
 
  const route = useRoute();
  const store = useStore();
- const hiddenRoutes = ['/about','/checkout','/final','/orders','/confirmationreset'];
+ const hiddenRouteNames = [
+  'aboutpage',
+  'checkoutpage',
+  'finalpaypage',
+  'orderspage',
+  'confirmresetpage',
+  'failurepaypage',
+  'successpaypage',
+  'errorroute', // important for 404
+];
+ 
 
- const showNavBar = computed(()=> !hiddenRoutes.includes(route.path))
+ const showNavBar = computed(()=> !hiddenRouteNames.includes(route.name))
 
-onMounted(()=>{
+      
+onMounted( async ()=>{
      store.verifyCookie();
 })
 
 
 </script>
-
-
-
-
 
 
 

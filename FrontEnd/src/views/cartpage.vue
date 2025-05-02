@@ -67,7 +67,7 @@ const store = useStore();
         
         <div class="sticky bottom-0 bg-white py-3 sm:py-4 mt-4">
           <button  @click="store.orderItem(router)"
-            class="w-full bg-green-500 text-white py-2 sm:py-3 rounded-lg text-base sm:text-lg font-semibold hover:bg-green-600 transition"
+            class="w-full bg-green-500 text-white py-2 sm:py-3 rounded-lg text-base sm:text-lg font-semibold hover:bg-green-600 transition cursor-pointer"
           >Place Order</button>
         </div>
       </div>

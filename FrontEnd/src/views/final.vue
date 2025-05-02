@@ -1,9 +1,8 @@
 <script setup>
-import { useStore } from '@/store/piniastore.js';
-import { useRoute, useRouter } from 'vue-router';
 
-const store = useStore();
-const route = useRoute();
+import { useRouter } from 'vue-router';
+
+
 const router = useRouter();
 
 const cart = JSON.parse(localStorage.getItem('cart') || '[]');

@@ -15,6 +15,8 @@ import confirmReset from '@/views/confirmreset.vue';
 import cardPayment from '@/views/cardpayment.vue';
 import successPay from '@/views/successpay.vue';
 import failurePay from '@/views/failurepay.vue';
+import error from '@/views/404.vue';
+
 
 
 
@@ -111,17 +113,26 @@ const router = createRouter({
             path: '/failurePay',
             name: 'failurepaypage',
             component: failurePay,
-          }
-
-
-
+          },
+          {
+            path: '/:pathMatch(.*)*',
+            name: 'errorroute',
+            component: error,
+          },
+        
     ]
 
 
-    
+
 })
 
+ export const legitRoutes = ['/','/cart','/menu/food','/menu/drink','/about','/signup','/checkout','/final',
+  '/orders','/login','/resetpassword','/resetmail','/confirmationreset','/cardpayment','/successPay','/failurePay']
 
+
+
+
+//navigation guards
 const protectedRoutes = ['checkoutpage','finalpaypage','orderspage']
 router.beforeEach(async (to, from, next) => {
   try {
@@ -136,7 +147,7 @@ router.beforeEach(async (to, from, next) => {
       }
 
       const data = await res.json();
-      const tokenUser = data.isAuth;
+      const tokenUser = data.isAuth;      //fetch token status from Backend
 
       if (tokenUser) {
         console.log('User is verified, proceed to page');
@@ -154,5 +165,8 @@ router.beforeEach(async (to, from, next) => {
     next({ name: 'loginpage' }); 
   }
 });
+
+
+
 
 export default router;

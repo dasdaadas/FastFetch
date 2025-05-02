@@ -9,7 +9,6 @@ import { useStore } from '@/store/piniastore';
   const paymentMethod = localStorage.getItem('payMethod') || 'N/A';
   const delFee = Number(localStorage.getItem('fee') || 0);
   const orderID =  ref(Math.floor(Math.random() * 100000000).toString());
-  const store = useStore();
   const fetchedFood = ref([]);
   const fetchedID = ref();
 
@@ -48,7 +47,7 @@ import { useStore } from '@/store/piniastore';
 
 
 <template>
-    <div class="min-h-screen bg-gray-100 p-4 sm:p-8">
+    <div class="min-h-screen bg-gray-100 p-4 sm:p-8 ">
       <div class="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
   
         <h2 class="text-3xl font-bold text-center text-green-600">Your Orders</h2>
@@ -77,33 +76,19 @@ import { useStore } from '@/store/piniastore';
             <h3 class="text-md font-semibold text-gray-700 mb-2">Items:</h3>
             <ul  v-for="(item,index) in fetchedFood" :key="index" class="space-y-1">
               <li class="flex justify-between">
-                <span><span>{{ item.quantity }}x </span>{{ item.name }}</span>
+                <span><span> ( {{ item.quantity }}x ) </span>{{ item.name }}</span>
                 <span class="font-medium">${{ item.price }}</span>
               </li>
             </ul>
 
-            <div class="flex justify-between items-center">
-            <p class="text-lg py-3 font-semiBold">Delivery Fee:</p>
-            <p class="text-lg font-semiBold">${{ delFee }}</p>
-            </div>
+            
           </div>
   
-          <!-- Delivery & Payment -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600">
-            <div>
-              <p class="font-semibold">Delivery Address:</p>
-              <p>{{ delAdd }}</p>
-            </div>
-            <div>
-              <p class="font-semibold">Payment Method:</p>
-              <p>{{ paymentMethod }}</p>
-            </div>
-          </div>
+         
   
           <!-- Total -->
           <div class="flex justify-between pt-4 border-t text-lg font-semibold">
-            <span>Total</span>
-            <span>${{ fetchedFood.reduce(( sum,items) => sum + items.price,0) + delFee }}</span>
+            
           </div>
         </div>
   

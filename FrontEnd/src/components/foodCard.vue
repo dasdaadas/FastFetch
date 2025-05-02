@@ -18,6 +18,6 @@ const addFoodItem = () => {
           <img :src="props.propItem.image" alt="Burger" class="w-full h-40 object-contain rounded-md mb-4">
           <h2 class="text-xl font-semibold">{{props.propItem.name}}</h2>
           <p class="text-gray-600 mt-1">${{props.propItem.price}}</p>
-          <button @click="addFoodItem" class="mt-3 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">Order Now</button>
+          <button @click="addFoodItem" class="mt-3 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 cursor-pointer">Order Now</button>
         </div>
 </template>

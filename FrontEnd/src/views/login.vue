@@ -29,18 +29,21 @@ const verifyUser = async()=>{
  })
   if(!res.ok){
     invalidPassword.value = true;
+    toast.error("Invalid Credentials");
     throw new Error('Invalid Credentials');
+    
   }
   const data = await res.json();
   const userPerson = data.username;
   const ID = data.userID;
    console.log("User Successfully Signed in",userPerson, ID);
-
+   invalidPassword.value = false;
    store.userName = userPerson;
    localStorage.setItem('username',userPerson); //optional for backup
 
-   store.verifyCookie();
-
+   store.verifyCookie();              //so verify user token.
+    
+      
    toast.success("User signed in successfully",{
     timeout: 1500,
    });
