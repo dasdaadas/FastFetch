@@ -3,6 +3,8 @@ import {ref} from 'vue';
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router';
 
+
+const apiBackend = import.meta.env.VITE_BACKEND_URL;
 const router = useRouter();
 const toast = useToast();
 const register = ref({
@@ -33,7 +35,7 @@ const handleSubmit= async ()=>{
     delete formData.confirmPass;
 
     try{
-    const res = await fetch('http://localhost:8001/api/addUser',{
+    const res = await fetch(`${apiBackend}/api/addUser`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

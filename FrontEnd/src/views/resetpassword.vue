@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useRouter,useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
+const apiBackend = import.meta.env.VITE_BACKEND_URL;
 const toast = useToast();
 const router = useRouter();
 const route = useRoute();
@@ -33,7 +34,7 @@ const tokenFromQuery = route.query.resettoken;
            
          try{
              
-             const res = await fetch('http://localhost:8001/api/resetPassword',{
+             const res = await fetch(`${apiBackend}/api/resetPassword`,{
                method: 'PUT',
                headers: {
                 "Content-Type": "application/json",

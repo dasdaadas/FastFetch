@@ -48,11 +48,17 @@ const closeProfile = () => {
 };
  
   
+const navigateAndClose = (path) => {
+  if (route.path !== path) {
+    router.push(path);
+    ismodalOpen.value = false;
+  }
+};
+
+
   const isBurgerActive = ref(false);
 
-
   const burgerBtn = () =>{
-
      isBurgerActive.value = !isBurgerActive.value;
   }
 
@@ -72,7 +78,7 @@ const closeProfile = () => {
 
     <!-- Burger Button (Mobile Only) -->
     <div @click="burgerBtn" class="md:hidden">
-      <button class="flex flex-col justify-between w-7 h-5 focus:outline-none group">
+      <button class="flex flex-col justify-between w-7 h-5 focus:outline-none group cursor-pointer" >
         <span class="block h-1 bg-gray-700 rounded transition-all duration-300 group-hover:bg-green-600"></span>
         <span class="block h-1 bg-gray-700 rounded transition-all duration-300 group-hover:bg-green-600"></span>
         <span class="block h-1 bg-gray-700 rounded transition-all duration-300 group-hover:bg-green-600"></span>
@@ -83,9 +89,9 @@ const closeProfile = () => {
    <transition name="fade">
   <div
     v-if="isBurgerActive"
-    class="w-full bg-white shadow-md md:hidden absolute top-16 left-0 z-40"
+    class="w-full bg-white shadow-md md:hidden absolute top-16 left-0 z-40 "
   >
-    <div class="flex flex-col items-start px-6 py-4 gap-3">
+    <div class="flex flex-col items-start px-6 py-4 gap-3 ">
       <RouterLink to="/home" class="text-gray-800 w-full py-1 hover:font-medium">Home</RouterLink>
       <RouterLink to="/menu/food" class="text-gray-800 w-full py-1 hover:font-medium">Menu</RouterLink>
       <RouterLink to="/about" class="text-gray-800 w-full py-1 hover:font-medium">About</RouterLink>
@@ -152,8 +158,8 @@ const closeProfile = () => {
                 <div class="w-52 h-1 bg-gray-300 mx-auto my-3 mb-4 rounded-full"></div>
                 
                 <div class="py-3 space-y-2">
-                <RouterLink  to="/orders"  class="block text-gray-700 pb-1 font-light hover:font-semibold transition-all duration-200"> Orders</RouterLink>
-                <a href="/" class="block text-gray-700 font-light hover:font-semibold transition-all duration-200"> Contact Us</a>
+                <Button  @click="navigateAndClose('/orders')" class="block text-gray-700 pb-1 font-light hover:font-semibold transition-all duration-200 cursor-pointer"> Orders</Button>
+                <Button @click="navigateAndClose('/contactus')" class="block text-gray-700 font-light hover:font-semibold transition-all duration-200  cursor-pointer"> Contact Us</Button>
                 </div>
                
 

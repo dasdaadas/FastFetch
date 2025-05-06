@@ -12,7 +12,7 @@ onMounted(()=>{
             num.value++;
           } else{
             clearInterval(interval);
-            router.push('/final')
+            router.replace('/final');
           }
      
     },1000)

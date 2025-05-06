@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { useStore } from '@/store/piniastore';
 import { useToast } from 'vue-toastification';
 
-
+const apiBackend = import.meta.env.VITE_BACKEND_URL;
 const store = useStore();
 const router = useRouter();
 const logIn = ref({
@@ -19,7 +19,7 @@ const verifyUser = async()=>{
  const verifyData = logIn.value;
 
    try{
-  const res = await fetch('http://localhost:8001/api/checkUserExists',{
+  const res = await fetch(`${apiBackend}/api/checkUserExists`,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

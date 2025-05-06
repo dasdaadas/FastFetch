@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import {computed, ref,watch} from 'vue'
 import { useToast } from "vue-toastification";
 
-
+const apiBackend = import.meta.env.VITE_BACKEND_URL;
 const toast = useToast();
 export const useStore = defineStore("cart",()=> {
   const limit = ref(4);
@@ -48,10 +48,16 @@ userName.value = localStorage.getItem('username') || null;
    
 
 
+
+
+
+
+
+
 //to verify token cookie.
 const verifyCookie = async()=>{
   try{
-   const res = await fetch('http://localhost:8001/api/authToken',{
+   const res = await fetch(`${apiBackend}/api/authToken`,{
        method: 'GET',
        credentials: 'include',
    });
@@ -70,6 +76,13 @@ const verifyCookie = async()=>{
  }
 
 
+
+
+
+
+
+
+
 //To add food to cart from homepage.
 const foodBtnClicked = (index,itemData) => {
     console.log(`A food of index ${index} was clicked and its data is:`,itemData );
@@ -85,6 +98,13 @@ const foodBtnClicked = (index,itemData) => {
 }
 
 
+
+
+
+
+
+
+
 //To add food to cart from Menu.
 const menuFoodClicked = (index,foodData) => {
   const existingFood = cart.value.find((food)=>food.name === foodData.name);
@@ -97,6 +117,13 @@ const menuFoodClicked = (index,foodData) => {
   }
   console.log(cart.value);
 }
+
+
+
+
+
+
+
 
 
 
@@ -141,6 +168,9 @@ const decrementItem = (name)=> {
 
 
 
+
+
+
 //transfer cart item to mongoDb.
 const orderItem = async (router) => {
   try{
@@ -148,7 +178,7 @@ const orderItem = async (router) => {
     const cartItems = cart.value;
     const totalValue = cart.value.reduce((sum,items)=> sum + items.price * items.quantity,0) + deliveryFee.value;
     const delFee = deliveryFee.value;
-        const res = await fetch('http://localhost:8001/api/placeOrder',{
+        const res = await fetch(`${apiBackend}/api/placeOrder`,{
            method: 'POST',
            headers:{
             "Content-Type": "application/json",
@@ -203,10 +233,13 @@ const orderItem = async (router) => {
 
 
 
+
+
+
 //to log out user.
 const removeUser = async(router)=>{
      try{
-  const response = await fetch('http://localhost:8001/api/logoutuser',{
+  const response = await fetch(`${apiBackend}/api/logoutuser`,{
        method: 'DELETE',
        credentials: 'include',
   });

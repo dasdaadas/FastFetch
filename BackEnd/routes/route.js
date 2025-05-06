@@ -1,5 +1,5 @@
 import express from 'express';
-import {addCartItem,getFoodData,addUser,checkUserExists,authStatus,logOutUser,checkMail,resetPasswordPL,sessionCreate} from '../controller/controller.js';
+import {addCartItem,getFoodData,addUser,checkUserExists,authStatus,logOutUser,checkMail,resetPasswordPL,sessionCreate,contactLogic} from '../controller/controller.js';
 
 
 
@@ -18,5 +18,6 @@ router.delete('/api/logoutuser',logOutUser);
 router.post('/api/resetMail',checkMail);
 router.put('/api/resetPassword',resetPasswordPL);
 router.post('/api/stripePayment',sessionCreate);
+router.post('/api/contactForm',contactLogic);
 
 export default router;

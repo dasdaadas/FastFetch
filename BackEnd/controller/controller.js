@@ -14,7 +14,7 @@ const enviPass = process.env.JWT_SECRET ;
 // console.log("JWT_SECRET is:", enviPass);
 
 
-
+const apiFrontend = process.env.VITE_FRONTEND_URL;
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 
@@ -103,6 +103,7 @@ export const addCartItem = async (req, res) => {
 
 
 
+
 //to get food data from mongodb.
 export const getFoodData = async(req,res) => {
   try {
@@ -127,6 +128,7 @@ export const getFoodData = async(req,res) => {
     return res.status(500).json({ msg: 'Server error', error: error.message });
   }
   }
+
 
 
 
@@ -162,6 +164,7 @@ export const addUser = async(req,res) => {
 
 
 
+
 //to check if user exists in database.
 export const checkUserExists = async(req,res)=> {
   try{
@@ -181,7 +184,6 @@ export const checkUserExists = async(req,res)=> {
 
       console.log('User exists');
 
-      
       //generating jwt token
       const token = jwt.sign(
         {id: check.id, username: check.username},
@@ -189,14 +191,12 @@ export const checkUserExists = async(req,res)=> {
         {expiresIn: '1h'}
       );
         
-
       res.cookie('authToken',token,{
         httpOnly: true,                 // Cookie cannot be accessed by JavaScript
         maxAge: 1000 * 60 * 60,        // 1 hour
         sameSite: 'strict', // Xess protection
       });
 
-      
       console.log("Mongo ID as string:", check._id.toString());
        return res.status(200).json({msg: 'User exists in the database', username: check.username,userID: check._id.toString()});
 
@@ -205,6 +205,7 @@ export const checkUserExists = async(req,res)=> {
     return res.status(500).json({msg: 'Server error', error: error.message})
   }
 }
+
 
 
 
@@ -240,6 +241,7 @@ export const authStatus = (req,res)=> {
 
 
 
+
    //to log out user
    export const logOutUser = (req,res)=>{
  
@@ -254,6 +256,7 @@ export const authStatus = (req,res)=> {
 
     })
    }
+
 
 
 
@@ -288,7 +291,7 @@ export const authStatus = (req,res)=> {
        // Save the updated user document 
        await checkPL.save();           
 
-       const resetLink = `http://localhost:8000/resetpassword?resettoken=${resetToken}&email=${email}`;
+       const resetLink = `${apiFrontend}/resetpassword?resettoken=${resetToken}&email=${email}`;
 
        const mailOptions = {
             from: 'fastfetch@gmail.com',
@@ -313,6 +316,7 @@ export const authStatus = (req,res)=> {
     return res.status(500).json({ msg: 'Server error', error: error.message });
    }
   }
+
 
 
 
@@ -373,6 +377,7 @@ export const authStatus = (req,res)=> {
 
 
 
+
 //stripe payment.
 export const sessionCreate = async(req,res) => {
   const cardDetailPayload = req.body;
@@ -387,15 +392,29 @@ export const sessionCreate = async(req,res) => {
             unit_amount: item.price*100,
            },
            quantity: item.quantity,
-   }))
+   }));
+
+   if(feeValue && feeValue > 0){
+      lineItems.push({
+        price_data:{
+          currency: 'usd',
+          product_data: {
+            name: 'Service Fee',
+          },
+          unit_amount: feeValue * 100
+        },
+        quantity: 1
+      })
+   }
+   
    try{
    const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
        line_items: lineItems,
               
-       success_url: `http://localhost:8000/successPay`,
-       cancel_url: `http://localhost:8000/failurePay`,
+       success_url: `${apiFrontend}/successPay`,
+       cancel_url: `${apiFrontend}/failurePay`,
    })
   
    return res.status(200).json({ sessionID: session.id});
@@ -405,4 +424,66 @@ export const sessionCreate = async(req,res) => {
     return res.status(500).json({ msg: 'Failed to create Stripe session', error: error.message });
   }
    
+}
+
+
+
+
+
+
+
+
+//contactUs logic.
+export const contactLogic = async(req,res)=>{
+
+    const contactFormData = req.body;
+    const { Email, Message,FullName } = contactFormData;
+    const tokenFromCookies = req.cookies.authToken;
+
+       if(!tokenFromCookies){
+        return res.status(400).json({msg: 'token is not available in payload'})     // if there is no token
+       }
+         
+       
+    
+      const decoded = jwt.verify(tokenFromCookies,enviPass);                                //verify token with the jwt key that was set in
+
+      if(!decoded){
+        return res.status(401).json({msg: 'Token not verified with JWT', isAuth: false})        //if token unmatches with the Secret-Key
+      }
+             
+               
+     const checkMail = await user.findOne({                                                              //to find email exists in database or not  upon successfuly verification                 
+      email: Email,
+      _id: decoded.id,
+     })
+     
+    
+
+  
+     if (!checkMail || checkMail._id.toString() !== decoded.id) {
+      return res.status(400).json({ msg: 'Invalid email or unauthorized access', isExist: false });
+    }
+
+      const mailOptions = ({                                                                        //if verified proceed
+        from: checkMail.email,
+        to:  process.env.EMAIL_USER,
+        subject: 'Customers review',
+        html: `<p>${Message}</p><br><p>From: ${FullName}</p>`,
+      })
+             //insert mail logic here 
+
+             
+             transporter.sendMail(mailOptions,(err,info)=>{
+                    if(err){
+                      return res.status(500).json({msg:'error sending email'})
+                    }
+                    return res.status(200).json({
+                      info: info.response,
+                      msg: 'Email exists and message  sent successfully',
+                      isAuth: true,
+                      isExist: true,
+                         })
+             })
+       
 }

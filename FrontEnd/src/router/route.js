@@ -16,10 +16,11 @@ import cardPayment from '@/views/cardpayment.vue';
 import successPay from '@/views/successpay.vue';
 import failurePay from '@/views/failurepay.vue';
 import error from '@/views/404.vue';
+import contactus from '@/views/contactus.vue';
 
 
 
-
+const apiBackend = import.meta.env.VITE_BACKEND_URL;
 const router = createRouter({
   
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -119,6 +120,11 @@ const router = createRouter({
             name: 'errorroute',
             component: error,
           },
+          {
+            path: '/contactus',
+            name: 'contactusepage',
+            component: contactus,
+          }
         
     ]
 
@@ -126,8 +132,7 @@ const router = createRouter({
 
 })
 
- export const legitRoutes = ['/','/cart','/menu/food','/menu/drink','/about','/signup','/checkout','/final',
-  '/orders','/login','/resetpassword','/resetmail','/confirmationreset','/cardpayment','/successPay','/failurePay']
+ 
 
 
 
@@ -137,7 +142,7 @@ const protectedRoutes = ['checkoutpage','finalpaypage','orderspage']
 router.beforeEach(async (to, from, next) => {
   try {
     if (protectedRoutes.includes(to.name)) {
-      const res = await fetch('http://localhost:8001/api/authToken', {
+      const res = await fetch(`${apiBackend}/api/authToken`, {
         method: 'GET',
         credentials: 'include',
       });

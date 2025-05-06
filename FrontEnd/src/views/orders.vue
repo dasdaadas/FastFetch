@@ -3,11 +3,8 @@ import { onMounted,ref } from 'vue';
 import dayjs from 'dayjs';
 import { useStore } from '@/store/piniastore';
 
-
+  const apiBackend = import.meta.env.VITE_BACKEND_URL;
   const time = ref(dayjs().format('MMMM D, YYYY'));
-  const delAdd = localStorage.getItem('addressNote') || 'No address Found';
-  const paymentMethod = localStorage.getItem('payMethod') || 'N/A';
-  const delFee = Number(localStorage.getItem('fee') || 0);
   const orderID =  ref(Math.floor(Math.random() * 100000000).toString());
   const fetchedFood = ref([]);
   const fetchedID = ref();
@@ -15,7 +12,7 @@ import { useStore } from '@/store/piniastore';
 
   onMounted(async () => {
   try{
-  const foodData = await fetch('http://localhost:8001/api/getData',{
+  const foodData = await fetch(`${apiBackend}/api/getData`,{
         method: 'GET',
         
         credentials: 'include',

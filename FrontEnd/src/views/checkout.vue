@@ -4,7 +4,7 @@ import { useStore } from '@/store/piniastore.js';
 import {useRouter} from 'vue-router';
 import { loadStripe } from '@stripe/stripe-js';
 
-
+const apiBackend = import.meta.env.VITE_BACKEND_URL;
 const stripePromise = loadStripe('pk_test_51RKB8DP4Sc2uvRf97Pbwh4zAEO8DeAQHzhc3CEjivsAJm64QEz8VRbMqCeQyIwPsBtW0K9aWGAYAGgKYb5CLxKj300RjRrvUxX');
 const router = useRouter();
 const store = useStore();
@@ -22,7 +22,7 @@ const fee = JSON.parse(localStorage.getItem('fee') || '0');
 const paymentFunc = async () => {
   if (paymentMethod.value === 'cardPayment') {
    
-      const res = await fetch('http://localhost:8001/api/stripePayment',{
+      const res = await fetch(`${apiBackend}/api/stripePayment`,{
            method: 'POST',
            headers: {
             'Content-Type': 'application/json',

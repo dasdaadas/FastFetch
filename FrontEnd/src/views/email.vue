@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
-
+const apiBackend = import.meta.env.VITE_BACKEND_URL;
 const router = useRouter();
 const toast = useToast();
 
@@ -11,12 +11,13 @@ const mail = ref({
     email:''
 })
 
+const isLoading = ref(false);
 
-
-
+ 
 const updateEP =  async () => {
+    isLoading.value = true;
     try{
-        const res = await fetch('http://localhost:8001/api/resetMail',{
+        const res = await fetch(`${apiBackend}/api/resetMail`,{
               method: 'POST',
               headers : {
                 "Content-Type": "application/json",
@@ -30,9 +31,11 @@ const updateEP =  async () => {
         if(!res.ok){
             if(res.status === 404 && data.msg){
               toast.error('Email doesnt exist');
+              isLoading.value = false;
                
             } else{
               toast.error('Failed confirming email');
+              isLoading.value = false;
             }
             return;
         }
@@ -42,6 +45,8 @@ const updateEP =  async () => {
         console.log('Message:',mailMsg,mailVerified);
         
         toast.success("Check your Mail for the rest link!");
+        isLoading.value = false;
+        mail.value.email = '';
         setTimeout(()=>{
           router.push('/login')
         },5000)
@@ -74,7 +79,9 @@ const updateEP =  async () => {
             type="submit"
             class="w-full bg-yellow-600 hover:bg-yellow-700 transition-all py-3 rounded-lg text-lg font-semibold text-white shadow-md"
           >
-            Continue
+           
+           <span v-if="isLoading">verifying......</span>
+           <span v-else>Continue</span>
           </button>
         </form>
       </div>
