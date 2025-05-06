@@ -192,7 +192,8 @@ export const checkUserExists = async(req,res)=> {
       );
         
       res.cookie('authToken',token,{
-        httpOnly: true,                 // Cookie cannot be accessed by JavaScript
+        httpOnly: true,  // Cookie cannot be accessed by JavaScript
+        secure: true,
         maxAge: 1000 * 60 * 60,        // 1 hour
         sameSite: 'strict', // Xess protection
       });
