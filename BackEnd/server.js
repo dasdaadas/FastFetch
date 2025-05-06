@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 app.use(cors({
-  origin:'http://localhost:8000',
+  origin:'https://fastfetch-frontend.onrender.com',
   methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: ['Content-Type'],
   credentials: true
