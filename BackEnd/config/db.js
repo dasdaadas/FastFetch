@@ -1,11 +1,15 @@
 
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
 
+
+
+dotenv.config();
 //  MongoDB Connection with Try-Catch.
 //Phase-1
 export const connectDB = async () => {
   try {
-         const nikConnect =  mongoose.createConnection('mongodb://localhost:27017/Neike');
+         const nikConnect =  mongoose.createConnection(process.env.MONGO_URL_NEIKE);
 
           nikConnect.on('connected',()=>{
           console.log('Connected to Neike DB');
@@ -27,7 +31,7 @@ export const connectDB = async () => {
 //Phase-2
 export const connectDB1 = async () => {
     try{
-        const yimConnect =  mongoose.createConnection('mongodb://localhost:27017/Yim');
+        const yimConnect =  mongoose.createConnection(process.env.MONGO_URL_YIM);
 
         yimConnect.on('connected',()=> {
           console.log('Connected to Yim DB');

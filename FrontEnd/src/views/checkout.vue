@@ -13,52 +13,55 @@ const paymentMethod = ref('');
 
 const cart = JSON.parse(localStorage.getItem('cart') || '[]');
 const fee = JSON.parse(localStorage.getItem('fee') || '0');
-
+const isVerifying = ref(false);
 
 
 
 
 // Define paymentFunc outside confirmOrder for proper scoping
 const paymentFunc = async () => {
-  if (paymentMethod.value === 'cardPayment') {
-   
-      const res = await fetch(`${apiBackend}/api/stripePayment`,{
-           method: 'POST',
-           headers: {
-            'Content-Type': 'application/json',
-           },
-           body: JSON.stringify({
-              cartItems: cart,
-              feeValue: fee,
-           })
-      })
+  isVerifying.value = true;
+
+  try {
+    if (paymentMethod.value === 'cardPayment') {
+      const res = await fetch(`${apiBackend}/api/stripePayment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cartItems: cart,
+          feeValue: fee,
+        }),
+      });
 
       const data = await res.json();
 
-      if(!res.ok){
+      if (!res.ok) {
         console.error('Stripe Checkout session error:', data.msg || 'Unknown error');
         return;
       }
- 
 
-       // Initialize Stripe.js and redirect to the checkout page
-       const stripe = await stripePromise;                  //This is the loadStripe() function call that returns a Promise
-       const result = await stripe.redirectToCheckout({
-         sessionId: data.sessionID,
-       })
+      const stripe = await stripePromise;
+      const result = await stripe.redirectToCheckout({
+        sessionId: data.sessionID,
+      });
 
-       if (result.error) {
-      console.error(result.error.message);  // Handle errors if necessary
-    } else {
-      console.log("Redirected to Stripe Checkout");
+      if (result.error) {
+        console.error(result.error.message);
+      } else {
+        console.log('Redirected to Stripe Checkout');
+      }
+    } else if (paymentMethod.value === 'cashOnDel') {
+      await router.replace('/final');
     }
-      
-    
-  } else if (paymentMethod.value === 'cashOnDel') {
-    return router.replace('/final');
+  } catch (error) {
+    console.error('Payment error:', error.message || error);
+  } finally {
+    // Always reset regardless of success or failure
+    isVerifying.value = false;
   }
 };
-
 
 
 
@@ -112,7 +115,9 @@ const confirmOrder = ()=> {
           <button  @click="confirmOrder"
             class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg text-lg transition"
           >
-            Confirm and Pay
+            
+            <span v-if="isVerifying">..Validating..</span>
+            <span v-else>Confirm and Pay</span>
           </button>
         </div>
   
