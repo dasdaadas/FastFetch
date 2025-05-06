@@ -195,7 +195,7 @@ export const checkUserExists = async(req,res)=> {
         httpOnly: true,  // Cookie cannot be accessed by JavaScript
         secure: true,
         maxAge: 1000 * 60 * 60,        // 1 hour
-        sameSite: 'strict', // Xess protection
+        sameSite: 'none', // Xess protection
       });
 
       console.log("Mongo ID as string:", check._id.toString());
