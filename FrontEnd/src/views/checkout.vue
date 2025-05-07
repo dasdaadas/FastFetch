@@ -5,7 +5,8 @@ import {useRouter} from 'vue-router';
 import { loadStripe } from '@stripe/stripe-js';
 
 const apiBackend = import.meta.env.VITE_BACKEND_URL;
-const stripePromise = loadStripe('pk_test_51RKB8DP4Sc2uvRf97Pbwh4zAEO8DeAQHzhc3CEjivsAJm64QEz8VRbMqCeQyIwPsBtW0K9aWGAYAGgKYb5CLxKj300RjRrvUxX');
+const stripePublic = import.meta.env.VITE_STRIPE_PUBLICKEY;
+const stripePromise = loadStripe(stripePublic);
 const router = useRouter();
 const store = useStore();
 const address = ref('');
