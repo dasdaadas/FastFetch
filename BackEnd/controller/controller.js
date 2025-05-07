@@ -295,7 +295,7 @@ export const authStatus = (req,res)=> {
        const resetLink = `${apiFrontend}/resetpassword?resettoken=${resetToken}&email=${email}`;
 
        const mailOptions = {
-            from: 'fastfetch@gmail.com',
+            from: `"FastFetch Support" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: 'password reset request',
             html: `<p>You requested a password reset. Click the link below to reset your password:</p> <a href="${resetLink}">${resetLink}</a>`,
