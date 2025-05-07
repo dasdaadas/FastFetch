@@ -23,7 +23,7 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 //setting transporter for nodemailer.
 const transporter = nodemailer.createTransport({
      host: 'smtp.gmail.com',
-     port: 587,
+     port: 465,
      secure: true,          // upgrade later with STARTTLS
       auth: {
         user: process.env.EMAIL_USER,           //my email.
