@@ -15,7 +15,7 @@ const enviPass = process.env.JWT_SECRET ;
 
 
 const apiFrontend = process.env.VITE_FRONTEND_URL;
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe =  new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 
