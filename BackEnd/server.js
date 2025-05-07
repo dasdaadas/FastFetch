@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 app.use(cors({
-  origin:'https://fastfetch-frontend.netlify.app',
+  origin:'fast-fetch-38stfu2ky-yimmenneikes-projects.vercel.app',
   methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: ['Content-Type'],
   credentials: true
