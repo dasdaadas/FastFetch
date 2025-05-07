@@ -43,8 +43,8 @@ const paymentFunc = async () => {
         return;
       }
 
-      const stripe = await stripePromise;
-      const result = await stripe.redirectToCheckout({
+      const stripe1 = await stripePromise;
+      const result = await stripe1.redirectToCheckout({
         sessionId: data.sessionID,
       });
 
