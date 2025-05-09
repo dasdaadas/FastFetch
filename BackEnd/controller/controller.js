@@ -253,7 +253,7 @@ export const authStatus = (req,res)=> {
             return res.status(404).json({msg: 'user log out unsuccessful,no token ', tokenRemoved: false})
           }  
           res.clearCookie('authToken',{
-             httpOnly: 'true',
+             httpOnly: true,
              secure: true,
               sameSite: 'none',               
           });
