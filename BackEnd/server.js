@@ -25,13 +25,17 @@ const allowedOrigins = [
   'https://fastfetch-backend.onrender.com'
 ];
 
-
 app.use(cors({
-  origin:'https://fast-fetch.vercel.app',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
-
 }));
 
 app.use(cookieParser());
