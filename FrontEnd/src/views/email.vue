@@ -17,7 +17,7 @@ const isLoading = ref(false);
 const updateEP =  async () => {
     isLoading.value = true;
     try{
-        const res = await fetch(`${apiBackend}/api/resetMail`,{
+        const res = await fetch('/api/resetMail',{
               method: 'POST',
               headers : {
                 "Content-Type": "application/json",
