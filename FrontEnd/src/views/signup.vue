@@ -35,7 +35,7 @@ const handleSubmit= async ()=>{
     delete formData.confirmPass;
 
     try{
-    const res = await fetch(`${apiBackend}/api/addUser`,{
+    const res = await fetch('/api/addUser',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
