@@ -1,5 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/(.*)", "destination": "/" },
+    {
+      "source": "/api/:path*",
+      "destination": "https://fastfetch-backend.onrender.com/api/:path*"
+    },
   ]
 }
