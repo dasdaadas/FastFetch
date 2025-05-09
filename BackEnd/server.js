@@ -18,6 +18,14 @@ const port = process.env.PORT || 8001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
+
+
+const allowedOrigins = [
+  'https://fast-fetch.vercel.app',
+  'https://fastfetch-backend.onrender.com'
+];
+
+
 app.use(cors({
   origin:'https://fast-fetch.vercel.app',
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
