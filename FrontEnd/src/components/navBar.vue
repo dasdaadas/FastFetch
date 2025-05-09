@@ -78,7 +78,7 @@ const navigateAndClose = (path) => {
 
     <!-- Burger Button (Mobile Only) -->
      <div @click="burgerBtn" class="md:hidden flex items-center z-50">
-      <button class="flex flex-col justify-between w-7 h-5 focus:outline-none group cursor-pointer" >
+      <button class="flex flex-col justify-between gap-1 w-7 h-5 focus:outline-none group cursor-pointer" >
         <span class="block h-1.5 w-full bg-gray-700 rounded transition-all duration-300 group-hover:bg-green-600 -webkit-transition-all"></span>
         <span class="block h-1.5 w-full bg-gray-700 rounded transition-all duration-300 group-hover:bg-green-600 -webkit-transition-all"></span>
         <span class="block h-1.5 w-full bg-gray-700 rounded transition-all duration-300 group-hover:bg-green-600 -webkit-transition-all"></span>
