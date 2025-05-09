@@ -34,7 +34,7 @@ const tokenFromQuery = route.query.resettoken;
            
          try{
              
-             const res = await fetch(`${apiBackend}/api/resetPassword`,{
+             const res = await fetch('/api/resetPassword',{
                method: 'PUT',
                headers: {
                 "Content-Type": "application/json",
