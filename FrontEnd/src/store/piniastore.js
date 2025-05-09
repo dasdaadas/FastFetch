@@ -239,7 +239,7 @@ const orderItem = async (router) => {
 //to log out user.
 const removeUser = async(router)=>{
      try{
-  const response = await fetch(`${apiBackend}/api/logoutuser`,{
+  const response = await fetch('/api/logoutuser',{
        method: 'DELETE',
        credentials: 'include',
   });
