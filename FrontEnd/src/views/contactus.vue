@@ -31,7 +31,7 @@ const contactUsData = async () => {
 
      loading.value = true;
     try{
-     const res = await fetch(`${apiBackend}/api/contactForm`,{
+     const res = await fetch('/api/contactForm',{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
