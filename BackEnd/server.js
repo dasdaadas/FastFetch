@@ -20,8 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 app.use(cors({
   origin:'https://fast-fetch.vercel.app',
-  methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: ['Content-Type'],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
   credentials: true
 
 }));
