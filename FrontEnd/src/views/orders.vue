@@ -12,7 +12,7 @@ import { useStore } from '@/store/piniastore';
 
   onMounted(async () => {
   try{
-  const foodData = await fetch(`${apiBackend}/api/getData`,{
+  const foodData = await fetch('/api/getData',{
         method: 'GET',
         
         credentials: 'include',
