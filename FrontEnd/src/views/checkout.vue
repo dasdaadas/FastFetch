@@ -25,7 +25,7 @@ const paymentFunc = async () => {
 
   try {
     if (paymentMethod.value === 'cardPayment') {
-      const res = await fetch('/api/stripePayment', {
+      const res = await fetch(`${apiBackend}/api/stripePayment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
