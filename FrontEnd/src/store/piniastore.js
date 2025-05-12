@@ -57,7 +57,7 @@ userName.value = localStorage.getItem('username') || null;
 //to verify token cookie.
 const verifyCookie = async()=>{
   try{
-   const res = await fetch('/api/authToken',{
+   const res = await fetch(`${apiBackend}/api/authToken`,{
        method: 'GET',
        credentials: 'include',
    });
@@ -178,7 +178,7 @@ const orderItem = async (router) => {
     const cartItems = cart.value;
     const totalValue = cart.value.reduce((sum,items)=> sum + items.price * items.quantity,0) + deliveryFee.value;
     const delFee = deliveryFee.value;
-        const res = await fetch('/api/placeOrder',{
+        const res = await fetch(`${apiBackend}/api/placeOrder`,{
            method: 'POST',
            headers:{
             "Content-Type": "application/json",
@@ -239,7 +239,7 @@ const orderItem = async (router) => {
 //to log out user.
 const removeUser = async(router)=>{
      try{
-  const response = await fetch('/api/logoutuser',{
+  const response = await fetch(`${apiBackend}/api/logoutuser`,{
        method: 'DELETE',
        credentials: 'include',
   });
