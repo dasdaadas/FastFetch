@@ -19,7 +19,7 @@ const verifyUser = async()=>{
  const verifyData = logIn.value;
 
    try{
-  const res = await fetch('/api/checkUserExists',{
+  const res = await fetch(`${apiBackend}/api/checkUserExists`,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
